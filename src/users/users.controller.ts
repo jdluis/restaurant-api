@@ -13,22 +13,21 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { UsersService } from './user.service';
+import { UsersService } from './users.service';
 import { NotFoundException } from '@nestjs/common';
-import { BeltGuard } from 'src/belt/belt.guard';
+import { BeltGuard } from '../belt/belt.guard';
 
 @Controller('users')
 @UseGuards(BeltGuard)
 export class UsersController {
-  //constructor(private readonly usersService: UsersService) {}; //Nest.js=>Err1Problem Here!!
-  usersService = new UsersService();
+  constructor(private readonly usersService: UsersService) {} //For declare one time and use in all document.
 
   // GET /users?type=client --> []
   @Get()
   getUsers(@Query('type') type: 'admin' | 'client') {
     return this.usersService.getUsers(type);
-    //return this.usersService.getUsers(type); //Nest.js=>Err1-Problem Here!!
   }
+
   // GET /users/:id --> {...}
   @Get(':id')
   getOneUser(@Param('id', ParseIntPipe) id: number) {
@@ -41,11 +40,13 @@ export class UsersController {
       });
     }
   }
+
   // POST /users
   @Post()
   createUser(@Body(new ValidationPipe()) createUserDto: CreateUserDto) {
     return this.usersService.createUser(createUserDto);
   }
+
   // PUT /users/:id --> {...}
   @Put(':id')
   updateOneUser(
@@ -54,6 +55,7 @@ export class UsersController {
   ) {
     return this.usersService.updateUser(id, updateUserDto);
   }
+
   // DELETE /users/:id
   @Delete(':id')
   removeOneUser(@Param('id', ParseIntPipe) id: number) {
