@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
+  //For testing
   private users = [
     {
       id: 0,
