@@ -1,9 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { Model } from 'mongoose';
+import { Injectable, Inject } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-
+import { User } from './interfaces/user.interface';
+import { DATA_BASE } from '../../constants';
 @Injectable()
 export class UsersService {
+  constructor(
+    @Inject(DATA_BASE.USER_MODEL) private readonly userModel: Model<User>,
+  ) {}
+
   //For testing
   private users = [
     {
@@ -37,14 +43,15 @@ export class UsersService {
 
     return user;
   }
-  createUser(createUserDto: CreateUserDto) {
-    const newUser = {
+  createUser(createUserDto: CreateUserDto): Promise<User> {
+    /* const newUser = {
       ...createUserDto,
       id: Date.now(),
     };
-    this.users.push(newUser);
+    this.users.push(newUser); */
 
-    return newUser;
+    const createdUser = this.userModel.create(createUserDto);
+    return createdUser;
   }
 
   updateUser(id: number, updateUserDto: UpdateUserDto) {
