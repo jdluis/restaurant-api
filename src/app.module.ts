@@ -8,7 +8,7 @@ import { MenuModule } from './menu/menu.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: '.env.local', //conigure env path
+      envFilePath: '.env.local', //configure env path
     }),
     UsersModule,
     MenuModule,

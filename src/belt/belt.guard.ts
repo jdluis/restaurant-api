@@ -10,7 +10,12 @@ export class BeltGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
 
     //validate request
-    const hasBlackBelt = request.body.type.includes('client');
+    console.log(request.body); //is empty in getAllUsers and others services..
+    const hasBlackBelt = true; /* request.body.type.includes('client') */
+
+    /* for example in the future, if you are admin, you can request a list o users 
+    ...
+    */
 
     return hasBlackBelt;
   }

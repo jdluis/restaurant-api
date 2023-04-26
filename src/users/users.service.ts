@@ -26,12 +26,14 @@ export class UsersService {
     },
   ];
 
-  getUsers(type?: 'admin' | 'client') {
-    //If type exist, then filter, if not return all
+  getUsers() {
+    return this.userModel.find();
+  }
+
+  getClients(type?: 'client') {
     if (type) {
       return this.users.filter((user) => user.type === type);
     }
-    return this.users;
   }
 
   getOneUser(id: number) {

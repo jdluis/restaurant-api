@@ -24,8 +24,12 @@ export class UsersController {
 
   // GET /users?type=client --> []
   @Get()
-  getUsers(@Query('type') type: 'admin' | 'client') {
-    return this.usersService.getUsers(type);
+  getUsers() {
+    return this.usersService.getUsers();
+  }
+  @Get('/clients')
+  getUsersClients(@Query('type') type: 'client') {
+    return this.usersService.getClients(type);
   }
 
   // GET /users/:id --> {...}
