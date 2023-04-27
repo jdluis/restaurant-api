@@ -1,9 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { CreateMenuDto } from './dto/create-menu.dto';
 import { UpdateMenuDto } from './dto/update-menu.dto';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+import { DATA_BASE } from '../../constants';
+import { Menu } from './interfaces/menu.interface';
 
 @Injectable()
 export class MenuService {
+  constructor(
+    @InjectModel(DATA_BASE.MENU_MODEL) private readonly menuModel: Model<Menu>,
+  ) {}
+
   //For testing
   private menu = [
     {
@@ -23,18 +31,11 @@ export class MenuService {
   ];
 
   create(createMenuDto: CreateMenuDto) {
-    const newFood = {
-      ...createMenuDto,
-      id: Date.now(),
-    };
-    this.menu.push(newFood);
-
-    return newFood;
+    return this.menuModel.create(createMenuDto);
   }
 
   findAll() {
-    const menu = this.menu;
-    return menu;
+    return this.menuModel.find();
   }
 
   findAllActive() {
