@@ -34,19 +34,25 @@ describe('UsersController', () => {
   });
 
   it('should create user', () => {
-    expect(
-      controller.createUser({
-        name: 'Juan77',
-        email: 'peep@gmail',
-        type: 'client',
-        password: 'dsafugha7968975',
-      }),
-    ).toEqual({
-      id: expect.any(Number),
+    const dto = {
       name: 'Juan77',
       email: 'peep@gmail',
       type: 'client',
       password: 'dsafugha7968975',
+    };
+
+    expect(
+      controller.createUser({
+        name: dto.name,
+        email: dto.email,
+        type: 'client',
+        password: dto.password,
+      }),
+    ).toEqual({
+      id: expect.any(Number),
+      ...dto,
     });
   });
+
+  /* expect(mockUsersService.createUser).toHaveBeenCalled(); */
 });

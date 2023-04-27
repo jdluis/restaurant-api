@@ -1,13 +1,15 @@
 import { Model } from 'mongoose';
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './interfaces/user.interface';
 import { DATA_BASE } from '../../constants';
+import { InjectModel } from '@nestjs/mongoose';
 @Injectable()
 export class UsersService {
   constructor(
-    @Inject(DATA_BASE.USER_MODEL) private readonly userModel: Model<User>,
+    //!Remember for Model of Mongoose @Inject: dosent work, and test fail, use @InjectModel
+    @InjectModel(DATA_BASE.USER_MODEL) private readonly userModel: Model<User>,
   ) {}
 
   //For testing
