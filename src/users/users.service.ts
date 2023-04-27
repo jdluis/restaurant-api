@@ -34,7 +34,7 @@ export class UsersService {
 
   getClients(type?: 'client') {
     if (type) {
-      return this.users.filter((user) => user.type === type);
+      return this.userModel.find({ type: 'client' });
     }
   }
 
