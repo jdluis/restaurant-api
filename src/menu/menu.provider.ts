@@ -1,5 +1,5 @@
 import { Connection } from 'mongoose';
-import { DATA_BASE } from '../../constants';
+import { DATA_BASE } from './../../constants';
 import { MenuSchema } from './schemas/menu.schema';
 
 export const menuProviders = [

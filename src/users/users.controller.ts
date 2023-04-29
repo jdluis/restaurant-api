@@ -27,6 +27,7 @@ export class UsersController {
   getUsers() {
     return this.usersService.getUsers();
   }
+
   @Get('/clients')
   getUsersClients(@Query('type') type: 'client') {
     return this.usersService.getClients(type);

@@ -1,15 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateMenuDto } from './dto/create-menu.dto';
 import { UpdateMenuDto } from './dto/update-menu.dto';
 import { Model } from 'mongoose';
-import { InjectModel } from '@nestjs/mongoose';
-import { DATA_BASE } from '../../constants';
+import { DATA_BASE } from './../../constants';
 import { Menu } from './interfaces/menu.interface';
 
 @Injectable()
 export class MenuService {
   constructor(
-    @InjectModel(DATA_BASE.MENU_MODEL) private readonly menuModel: Model<Menu>,
+    @Inject(DATA_BASE.MENU_MODEL) private readonly menuModel: Model<Menu>,
   ) {}
 
   //For testing

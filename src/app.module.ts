@@ -4,11 +4,11 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { MenuModule } from './menu/menu.module';
-import { DatabaseModule } from './database/database.module';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
-    DatabaseModule,
+    MongooseModule.forRoot('mongodb://127.0.0.1:27017/restaurant-api'),
     ConfigModule.forRoot({
       envFilePath: '.env.local', //configure env path
     }),

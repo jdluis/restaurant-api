@@ -9,5 +9,3 @@ export const databaseProviders = [
       ),
   },
 ];
-
-// https://docs.nestjs.com/recipes/mongodb#getting-started

@@ -1,45 +1,29 @@
-import { Model } from 'mongoose';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Model } from 'mongoose';
+import { DATA_BASE } from './../../constants';
 import { User } from './interfaces/user.interface';
-import { DATA_BASE } from '../../constants';
-import { InjectModel } from '@nestjs/mongoose';
 @Injectable()
 export class UsersService {
+  //Aqui tengo el problema
   constructor(
     //!Remember for Model of Mongoose @Inject: dosent work, and test fail, use @InjectModel
-    @InjectModel(DATA_BASE.USER_MODEL) private readonly userModel: Model<User>,
+    @Inject(DATA_BASE.USER_MODEL) private userModel: Model<User>,
   ) {}
 
-  //For testing
-  private users = [
-    {
-      id: 0,
-      type: 'admin',
-      name: 'admin',
-      email: 'admin@gmail.com',
-    },
-    {
-      id: 1,
-      type: 'client',
-      name: 'clientTest',
-      email: 'clientTest@gmail.com',
-    },
-  ];
-
-  getUsers() {
-    return this.userModel.find();
+  async getUsers() {
+    return await this.userModel.find().exec();
   }
 
-  getClients(type?: 'client') {
+  async getClients(type?: 'client') {
     if (type) {
-      return this.userModel.find({ type: 'client' });
+      return await this.userModel.find({ type: 'client' }).exec();
     }
   }
 
-  getOneUser(id: number) {
-    const user = this.users.find((user) => user.id === id);
+  async getOneUser(id: number) {
+    const user = await this.userModel.findById(id).exec();
 
     if (!user) {
       throw new Error('User not found');
@@ -47,33 +31,26 @@ export class UsersService {
 
     return user;
   }
+
   createUser(createUserDto: CreateUserDto): Promise<User> {
-    /* const newUser = {
-      ...createUserDto,
-      id: Date.now(),
-    };
-    this.users.push(newUser); */
-
-    const createdUser = this.userModel.create(createUserDto);
-    return createdUser;
+    return this.userModel.create(createUserDto);
   }
 
-  updateUser(id: number, updateUserDto: UpdateUserDto) {
-    this.users = this.users.map((user) => {
-      if (user.id === id) {
-        return { ...user, ...updateUserDto };
-      }
-
-      return user;
-    });
-    return this.getOneUser(id);
+  async updateUser(id: number, updateUserDto: UpdateUserDto) {
+    const updatedUser = await this.userModel
+      .findByIdAndUpdate(id, updateUserDto, { new: true })
+      .exec();
+    if (!updatedUser) {
+      throw new Error('User not found');
+    }
+    return updatedUser;
   }
 
-  removeUser(id: number) {
-    const toBeRemoved = this.getOneUser(id);
-
-    this.users = this.users.filter((user) => user.id !== id);
-
-    return toBeRemoved;
+  async removeUser(id: number) {
+    const deletedUser = await this.userModel.findByIdAndDelete(id).exec();
+    if (!deletedUser) {
+      throw new Error('User not found');
+    }
+    return deletedUser;
   }
 }
