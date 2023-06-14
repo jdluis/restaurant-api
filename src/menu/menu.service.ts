@@ -39,27 +39,27 @@ export class MenuService {
     return this.menuModel.find();
   }
 
-  findAllSpecial() {
-    const menuActive = this.menu.find((food) => {
-      food.isSpecial === true;
-    });
+  findAllActive() {
+    const menuActive = this.menuModel.find({ isActive: true });
     return menuActive;
   }
 
-  findAllActive() {
-    const menuActive = this.menu.find((food) => {
-      food.isActive === true;
+  findAllSpecial() {
+    const menuSpecial = this.menuModel.find({
+      isActive: true,
+      isSpecial: true,
     });
-    return menuActive;
+    return menuSpecial;
   }
 
   findOne(id: number) {
-    const food = this.menu.find((food) => {
+    const food = this.menuModel.find((food) => {
       food.id === id;
     });
     return food;
   }
 
+  //testing
   update(id: number, updateMenuDto: UpdateMenuDto) {
     this.menu = this.menu.map((food) => {
       if (food.id === id) {
@@ -70,7 +70,7 @@ export class MenuService {
     });
     return this.findOne(id);
   }
-
+  //testing
   remove(id: number) {
     const removedFood = this.menu.filter((food) => {
       food.id !== id;
