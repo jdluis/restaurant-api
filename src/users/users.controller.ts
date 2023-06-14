@@ -9,16 +9,13 @@ import {
   Body,
   ParseIntPipe,
   ValidationPipe,
-  UseGuards,
   NotFoundException,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
-import { BeltGuard } from '../belt/belt.guard';
 
 @Controller('users')
-@UseGuards(BeltGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {} //For declare one time and use in all document.
 
@@ -35,9 +32,9 @@ export class UsersController {
 
   // GET /users/:id --> {...}
   @Get(':id')
-  getOneUser(@Param('id', ParseIntPipe) id: number) {
+  findOne(@Param('id', ParseIntPipe) id: number) {
     try {
-      return this.usersService.getOneUser(id);
+      return this.usersService.findOne(id);
     } catch (error) {
       throw new NotFoundException('User Not Found', {
         cause: error,

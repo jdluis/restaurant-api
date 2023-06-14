@@ -22,6 +22,16 @@ export class MenuController {
     return this.menuService.create(createMenuDto);
   }
 
+  @Get('/active')
+  findAllActive() {
+    return this.menuService.findAllActive();
+  }
+
+  @Get('/special')
+  findAllSpecial() {
+    return this.menuService.findAllSpecial();
+  }
+
   @Get()
   findAll() {
     return this.menuService.findAll();

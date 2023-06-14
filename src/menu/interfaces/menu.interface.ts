@@ -5,4 +5,5 @@ export interface Menu extends Document {
   readonly price: number;
   readonly isActive: boolean;
   readonly description: string;
+  readonly isSpecial: boolean;
 }

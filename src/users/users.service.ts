@@ -12,6 +12,14 @@ export class UsersService {
     @Inject(DATA_BASE.USER_MODEL) private userModel: Model<User>,
   ) {}
 
+  async findByEmail(email: string): Promise<User> {
+    const user = await this.userModel.findOne({ email }).exec();
+    if (!user) {
+      throw new Error(`User with email ${email} not found`);
+    }
+    return Promise.resolve(user);
+  }
+
   async getUsers() {
     return await this.userModel.find().exec();
   }
@@ -22,7 +30,7 @@ export class UsersService {
     }
   }
 
-  async getOneUser(id: number) {
+  async findOne(id: number) {
     const user = await this.userModel.findById(id).exec();
 
     if (!user) {

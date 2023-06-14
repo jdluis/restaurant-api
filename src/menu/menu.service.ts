@@ -19,6 +19,7 @@ export class MenuService {
       name: 'Pollo',
       description: 'Pollo salteado',
       isActive: false,
+      isSpecial: true,
     },
     {
       id: 1,
@@ -26,6 +27,7 @@ export class MenuService {
       name: 'Tofu',
       description: 'Tofu salteado',
       isActive: true,
+      isSpecial: false,
     },
   ];
 
@@ -35,6 +37,13 @@ export class MenuService {
 
   findAll() {
     return this.menuModel.find();
+  }
+
+  findAllSpecial() {
+    const menuActive = this.menu.find((food) => {
+      food.isSpecial === true;
+    });
+    return menuActive;
   }
 
   findAllActive() {

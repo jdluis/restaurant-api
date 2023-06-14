@@ -6,4 +6,5 @@ export class UpdateMenuDto extends PartialType(CreateMenuDto) {
   price: number;
   description: string;
   isActive: boolean;
+  isSpecial: boolean;
 }

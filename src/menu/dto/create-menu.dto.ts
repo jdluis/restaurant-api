@@ -3,4 +3,5 @@ export class CreateMenuDto {
   price: number;
   description: string;
   isActive: boolean;
+  isSpecial: boolean;
 }

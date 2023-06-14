@@ -5,4 +5,5 @@ export const MenuSchema = new mongoose.Schema({
   price: Number,
   isActive: Boolean,
   description: String,
+  image: String,
 });
