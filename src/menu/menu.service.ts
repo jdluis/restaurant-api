@@ -20,6 +20,8 @@ export class MenuService {
       description: 'Pollo salteado',
       isActive: false,
       isSpecial: true,
+      category: 'principal',
+      ingredients: ['Egg', 'pasta', 'meet'],
     },
     {
       id: 1,
@@ -28,6 +30,8 @@ export class MenuService {
       description: 'Tofu salteado',
       isActive: true,
       isSpecial: false,
+      category: 'principal',
+      ingredients: ['Egg', 'pasta', 'meet'],
     },
   ];
 

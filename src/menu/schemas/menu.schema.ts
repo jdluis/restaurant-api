@@ -6,4 +6,6 @@ export const MenuSchema = new mongoose.Schema({
   isActive: Boolean,
   description: String,
   image: String,
+  category: String,
+  ingredients: [String],
 });
